@@ -82,11 +82,11 @@ export default class Matrix {
     const format = "{" + "c".repeat(this._data[0].length - 1) + "|c}";
 
     let contents = "";
-    for (let row of this._data) {
-      for (let i = 0; i < row.length; i++) {
-        contents += i !== row.length - 1
-          ? row[i] + " & "
-          : row[i] + " \\\\ ";
+    for (let i = 0; i < this._data.length; i++) {
+      for (let j = 0; j < this._data[i].length; j++) {
+        contents += j !== this._data[i].length - 1
+          ? getPlaceholder(j, i) + " & "
+          : getPlaceholder(j, i) + " \\\\ ";
       }
     }
     return `${this._begin}${format}${contents}${this._end}`
