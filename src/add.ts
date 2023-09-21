@@ -1,46 +1,67 @@
-import {ComputeEngine} from "@cortex-js/compute-engine";
-import {Input} from "./input.ts";
+import {Inputfield} from "./inputfield.ts";
 
-const ce = new ComputeEngine();
-const lhs0 = "{\\placeholder[lhs0]{}}";
-const rhs0 = "{\\placeholder[rhs0]{}}";
-const rhs1 = "{\\placeholder[rhs1]{}}";
-const scalar0 = "{\\placeholder[scalar0]{}}";
-const scalar1 = "{\\placeholder[scalar1]{}}";
+export type AddOperation = { R_left: number, S_left: string | null, R_right: number, S_right: string | null };
 
-export type AddOperation = { R0: number, S0: number | null, R1: number, S1: number | null};
+export class Add extends Inputfield {
+  private readonly _lhs_0 = this._placeholder("lhs_0");
+  private readonly _rhs_0 = this._placeholder("rhs_0");
+  private readonly _rhs_1 = this._placeholder("rhs_1");
+  private readonly _scalar_0 = this._placeholder("scalar_0");
+  private readonly _scalar_1 = this._placeholder("scalar_1");
+  private _prev_R = "";
 
-export class Add extends Input {
-  private _prev_R: string;
-
-  constructor() {
+  public constructor() {
     super("#input-add");
-    this._prev_R = "";
-
-    window.addEventListener("load", () => this._mfe.setValue(`R_${lhs0}=${scalar0}R_${rhs0}+${scalar1}R_${rhs1}`));
+    window.addEventListener("load", () => {
+      this._mfe.setValue(`R_${this._lhs_0}=${this._scalar_0}R_${this._rhs_0}+${this._scalar_1}R_${this._rhs_1}`);
+    });
 
     this._mfe.addEventListener("input", () => {
-      const new_lhs0 = this._mfe.getPromptValue("lhs0");
-      const new_rhs0 = this._mfe.getPromptValue("rhs0");
-
-      if (new_lhs0 === new_rhs0) return;
-
-      let new_val = new_lhs0 !== this._prev_R ? new_lhs0 : new_rhs0;
-      this._mfe.setPromptContent("lhs0", new_val, {});
-      this._mfe.setPromptContent("rhs0", new_val, {});
-      this._prev_R = new_val;
+      const new_lhs0 = this._mfe.getPromptValue("lhs_0");
+      const new_rhs0 = this._mfe.getPromptValue("rhs_0");
+      if (new_lhs0 !== new_rhs0) {
+        let newVal = new_lhs0 !== this._prev_R ? new_lhs0 : new_rhs0;
+        this._mfe.setPromptContent("lhs_0", newVal, {});
+        this._mfe.setPromptContent("rhs_0", newVal, {});
+        this._prev_R = newVal;
+      }
     })
   }
 
-  getOperation(): AddOperation {
-    let S0 = this._mfe.getPromptValue("scalar0") === "" ? 1 : null;
-    let S1 = this._mfe.getPromptValue("scalar1") === "" ? 1 : null;
+  public override evaluate(data: string[][]): string[][] | null {
+    const { R_left, S_left, R_right, S_right } = this._operation();
+
+    if (S_left === null || S_right === null ||
+        isNaN(R_left) || isNaN(R_right) ||
+        R_left < 0 || R_left > data.length - 1 ||
+        R_right < 0 || R_right > data.length - 1) {
+      return null;
+    }
+
+    for (let i = 0; i < data[R_left].length; i++) {
+      const expr = this._ce.parse(`(${S_left} * ${data[R_left][i]}) +  (${S_right} * ${data[R_right][i]})`)
+        .evaluate()
+        .simplify();
+
+      if (!expr.isValid) {
+        return null;
+      } else {
+        data[R_left][i] = expr.latex;
+      }
+    }
+
+    return data;
+  }
+
+  protected override _operation(): AddOperation {
+    let scalar_0 = this._mfe.getPromptValue("scalar_0") === "" ? "1" : null;
+    let scalar_1 = this._mfe.getPromptValue("scalar_1") === "" ? "1" : null;
 
     return {
-      R0: +this._mfe.getPromptValue("lhs0"),
-      S0: S0 || +ce.parse(this._mfe.getPromptValue("scalar0"))?.N().valueOf() || null,
-      R1: +this._mfe.getPromptValue("rhs1"),
-      S1: S1 || +ce.parse(this._mfe.getPromptValue("scalar1"))?.N().valueOf() || null,
+      R_left: +this._mfe.getPromptValue("lhs_0") - 1,
+      S_left: scalar_0 || this._ce.parse(this._mfe.getPromptValue("scalar_0")).simplify().latex,
+      R_right: +this._mfe.getPromptValue("rhs_1") - 1,
+      S_right: scalar_1 || this._ce.parse(this._mfe.getPromptValue("scalar_1")).simplify().latex,
     };
   }
 }

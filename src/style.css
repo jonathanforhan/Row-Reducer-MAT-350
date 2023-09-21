@@ -4,7 +4,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(255, 255, 255, 0.85);
   background-color: #242424;
 
   font-synthesis: none;
@@ -43,13 +43,12 @@ math-field {
   border-radius: 32px;
   width: fit-content;
   overflow: auto;
-  padding: 0 4px;
   margin: 2rem;
   border: 1px solid
 }
 
 .selector input[type=button]:hover {
-  font-weight: bold;
+  font-weight: bolder;
   background-color: transparent;
 }
 
@@ -65,8 +64,19 @@ math-field {
   border: none;
   text-align: center;
   cursor: pointer;
-  padding: 0;
+  padding-right: 16px;
+  padding-left: 12px;
   height: 2.5rem;
+}
+
+.undo-btn {
+  border: none;
+  font-size: 1rem;
+  text-align: center;
+  cursor: pointer;
+  padding: 0 1rem;
+  height: 2.5rem;
+  width: fit-content;
 }
 
 .tabs {
@@ -102,6 +112,12 @@ math-field {
 .input {
   font-size: 2rem;
   margin: 2rem 0;
+}
+
+#evaluate {
+  font-size: 2rem;
+  margin: auto;
+  padding: 1px 1rem 4px 1rem;
 }
 
 #app {

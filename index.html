@@ -22,12 +22,15 @@
           <span id="column-text">Column</span>
           <input type="button" id="column-add" class="add-btn" value="+">
         </div>
+        <div class="selector">
+          <button id="undo-btn" class="undo-btn">undo</button>
+        </div>
       </div>
       <div>
         <math-field read-only id="matrix" style="font-size: 3rem"></math-field>
       </div>
       <div>
-        <div class="tabs">
+        <div class="tabs" style="justify-content: center">
           <!-- Addition tab -->
           <input type="radio" class="tabs__radio" name="operation-tabs" id="tab-add" checked>
           <label for="tab-add" class="tabs__label">Add</label>
@@ -47,7 +50,7 @@
             <math-field read-only id="input-swap" class="input"></math-field>
           </div>
         </div>
-        <button id="evaluate" style="font-size: 2rem; padding: 0 8px 4px 8px; height: fit-content">evaluate</button>
+        <button id="evaluate">Evaluate</button>
       </div>
     </div>
     <script type="module" src="/src/main.ts"></script>

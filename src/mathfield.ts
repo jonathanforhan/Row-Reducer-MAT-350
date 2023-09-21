@@ -1,9 +1,11 @@
 import {MathfieldElement} from "mathlive";
+import {ComputeEngine} from "@cortex-js/compute-engine";
 
 declare var mathVirtualKeyboard: any;
 
-export class Input {
+export class Mathfield {
   protected _mfe: MathfieldElement;
+  protected _ce: ComputeEngine;
 
   constructor(tag: string) {
     this._mfe = document.querySelector<MathfieldElement>(tag)!;
@@ -12,5 +14,12 @@ export class Input {
       mathVirtualKeyboard.layouts = ["numeric"];
       mathVirtualKeyboard.visible = isMobile;
     });
+
+    this._ce = new ComputeEngine();
+    this._ce.latexOptions.precision = 6;
+  }
+
+  protected _placeholder(prompt: string, value?: string): string {
+    return `{\\placeholder[${prompt}]{${value || ""}}}`;
   }
 }

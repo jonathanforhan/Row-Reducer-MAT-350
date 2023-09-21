@@ -1,33 +1,28 @@
-import { MathfieldElement } from "mathlive";
+import {Mathfield} from "./mathfield.ts";
 
-declare var mathVirtualKeyboard: any;
+const [
+  rowNumber,
+  columnNumber,
+  rowText,
+  columnText,
+] = [
+  document.querySelector("#row-number")!,
+  document.querySelector("#column-number")!,
+  document.querySelector("#row-text")!,
+  document.querySelector("#column-text")!,
+];
 
-const rowNumber = document.querySelector("#row-number")!;
-const columnNumber = document.querySelector("#column-number")!;
-const rowText = document.querySelector("#row-text")!;
-const columnText = document.querySelector("#column-text")!;
-
-function getPlaceholder(x: number, y: number): string {
-  return `{\\placeholder[${y.toString()}${x.toString()}]{}}`;
-}
-
-export default class Matrix {
+export class Matrix extends Mathfield {
   private readonly _begin: string;
   private readonly _end: string;
   private _data: string[][];
-  private _mfe: MathfieldElement;
 
   constructor() {
+    super("#matrix");
     this._begin = "\\left[\\begin{array}";
     this._end = "\\end{array}\\right]";
-    this._data = [[getPlaceholder(0, 0)]];
+    this._data = [[this._placeholder(""+ 0 + 0)]];
 
-    this._mfe = document.querySelector<MathfieldElement>("#matrix")!;
-    this._mfe.addEventListener("focus", () => {
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      mathVirtualKeyboard.layouts = ["numeric"];
-      mathVirtualKeyboard.visible = isMobile;
-    });
     window.addEventListener("load", () => this._mfe.setValue(this.toLatex()));
 
     document.querySelector("#row-sub")!.addEventListener("click", () => this.subtractRow());
@@ -49,7 +44,7 @@ export default class Matrix {
     if (this._data.length < 10)
     {
       const [x, y] = [this._data[0].length - 1, this._data.length];
-      this._data.push(Array(this._data[0].length).fill(`${getPlaceholder(x, y)}`));
+      this._data.push(Array(this._data[0].length).fill(`${this._placeholder(""+ y + x)}`));
       this._mfe.setValue(this.toLatex());
       rowNumber.innerHTML = (+rowNumber.innerHTML + 1).toString();
       rowText.innerHTML = "Rows";
@@ -70,7 +65,7 @@ export default class Matrix {
     {
       for (let i = 0; i < this._data.length; i++) {
         const [x, y] = [this._data[i].length, i];
-        this._data[i].push(getPlaceholder(x, y));
+        this._data[i].push(this._placeholder(""+ y + x));
       }
       this._mfe.setValue(this.toLatex());
       columnNumber.innerHTML = (+columnNumber.innerHTML + 1).toString();
@@ -79,14 +74,13 @@ export default class Matrix {
   }
 
   toLatex(): string {
-    const format = "{" + "c".repeat(this._data[0].length - 1) + "|c}";
+    const format = `{${"c".repeat(this._data[0].length - 1)}|c}`;
 
     let contents = "";
     for (let i = 0; i < this._data.length; i++) {
       for (let j = 0; j < this._data[i].length; j++) {
-        contents += j !== this._data[i].length - 1
-          ? getPlaceholder(j, i) + " & "
-          : getPlaceholder(j, i) + " \\\\ ";
+        const delim = j !== this._data[i].length - 1 ? " & " : " \\\\ ";
+        contents += this._placeholder(""+ i + j) + delim;
       }
     }
     return `${this._begin}${format}${contents}${this._end}`
@@ -94,9 +88,9 @@ export default class Matrix {
 
   getData(): string[][] {
     let data = JSON.parse(JSON.stringify(this._data));
-    for (let i = 0; i < this._data.length; i++) {
-      for (let j = 0; j < this._data[0].length; j++) {
-        data[i][j] = +this._mfe.getPromptValue(i.toString() + j.toString());
+    for (let i = 0; i < data.length; i++) {
+      for (let j = 0; j < data[0].length; j++) {
+        data[i][j] = this._mfe.getPromptValue(""+ i + j);
       }
     }
     return data;
@@ -106,9 +100,9 @@ export default class Matrix {
     this._data = data;
     for (let i = 0; i < this._data.length; i++) {
       for (let j = 0; j < this._data[i].length; j++) {
-        this._mfe.setPromptContent(`${i}${j}`, this._data[i][j], {});
+        this._mfe.setPromptContent(""+ i + j, this._data[i][j], {});
       }
     }
     (document.activeElement! as HTMLElement).blur();
   }
-};
+}
