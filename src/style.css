@@ -15,7 +15,6 @@
 }
 
 body {
-  margin: 2rem 0 0 0;
   display: flex;
   min-width: 320px;
   min-height: 100vh;
@@ -68,6 +67,42 @@ math-field {
   padding: 0;
   height: 2.5rem;
 }
+
+.tabs {
+  margin: 2rem 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tabs__label {
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.tabs__radio {
+  display: none;
+}
+
+.tabs__content {
+  order: 1;
+  width: 100%;
+  display: none;
+}
+
+.tabs__radio:checked+.tabs__label {
+  font-weight: bolder;
+  border-bottom: 2px solid;
+}
+
+.tabs__radio:checked+.tabs__label+.tabs__content {
+  display: initial;
+}
+
+.input {
+  font-size: 2rem;
+  margin: 2rem 0;
+}
+
 #app {
   max-width: 1280px;
   margin: 0 auto;

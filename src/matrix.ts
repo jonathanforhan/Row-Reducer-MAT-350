@@ -109,6 +109,6 @@ export default class Matrix {
         this._mfe.setPromptContent(`${i}${j}`, this._data[i][j], {});
       }
     }
-    document.querySelector<MathfieldElement>("#input")!.focus();
+    (document.activeElement! as HTMLElement).blur();
   }
 };

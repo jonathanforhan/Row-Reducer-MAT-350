@@ -27,8 +27,27 @@
         <math-field read-only id="matrix" style="font-size: 3rem"></math-field>
       </div>
       <div>
-        <math-field read-only id="input" style="font-size: 2rem; margin-top: 5rem"></math-field>
-        <button id="evaluate" style="font-size: 2rem; margin-left: 2rem; padding: 0 8px 4px 8px">evaluate</button>
+        <div class="tabs">
+          <!-- Addition tab -->
+          <input type="radio" class="tabs__radio" name="operation-tabs" id="tab-add" checked>
+          <label for="tab-add" class="tabs__label">Add</label>
+          <div class="tabs__content">
+            <math-field read-only id="input-add" class="input"></math-field>
+          </div>
+          <!-- Scaling tab -->
+          <input type="radio" class="tabs__radio" name="operation-tabs" id="tab-scale">
+          <label for="tab-scale" class="tabs__label">Scale</label>
+          <div class="tabs__content">
+            <math-field read-only id="input-scale" class="input"></math-field>
+          </div>
+          <!-- Swapping tab -->
+          <input type="radio" class="tabs__radio" name="operation-tabs" id="tab-swap">
+          <label for="tab-swap" class="tabs__label">Swap</label>
+          <div class="tabs__content">
+            <math-field read-only id="input-swap" class="input"></math-field>
+          </div>
+        </div>
+        <button id="evaluate" style="font-size: 2rem; padding: 0 8px 4px 8px; height: fit-content">evaluate</button>
       </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
