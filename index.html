@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Row Reduce MAT-350</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Row Reducer MAT-350</h1>
+      <div class="selector-container">
+        <div class="selector">
+          <input type="button" id="row-sub" class="sub-btn" value="-">
+          <span id="row-number">1</span>
+          <span id="row-text">Row</span>
+          <input type="button" id="row-add" class="add-btn" value="+">
+        </div>
+        <div class="selector">
+          <input type="button" id="column-sub" class="sub-btn" value="-">
+          <span id="column-number">1</span>
+          <span id="column-text">Column</span>
+          <input type="button" id="column-add" class="add-btn" value="+">
+        </div>
+      </div>
+      <div>
+        <math-field read-only id="matrix" style="font-size: 3rem"></math-field>
+      </div>
+      <div>
+        <math-field read-only id="input" style="font-size: 2rem; margin-top: 5rem"></math-field>
+        <button id="evaluate" style="font-size: 2rem; margin-left: 2rem; padding: 0 8px 4px 8px">evaluate</button>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+    <script defer src="//unpkg.com/mathlive"></script>
+  </body>
+</html>

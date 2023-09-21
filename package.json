@@ -1,0 +1,19 @@
+{
+  "name": "row-reduce-mat350",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
+  },
+  "dependencies": {
+    "@cortex-js/compute-engine": "^0.15.0",
+    "mathlive": "^0.95.5"
+  }
+}
