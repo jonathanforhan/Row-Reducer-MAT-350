@@ -37,13 +37,14 @@ math-field {
 .selector-container {
   display: flex;
   justify-content: center;
+  padding: 0 1em;
 }
 
 .selector {
   border-radius: 32px;
   width: fit-content;
   overflow: auto;
-  margin: 2rem;
+  margin: 2rem auto;
   border: 1px solid
 }
 
@@ -53,7 +54,7 @@ math-field {
 }
 
 .selector span {
-  font-size: 1em;
+  font-size: 1rem;
 }
 
 .selector input[type=button], input[type=text] {
