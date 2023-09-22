@@ -44,7 +44,7 @@ math-field {
   border-radius: 32px;
   width: fit-content;
   overflow: auto;
-  margin: 2rem auto;
+  margin: 2em;
   border: 1px solid
 }
 
@@ -143,3 +143,38 @@ math-field {
     display: none;
   }
 }
+
+@media (max-width: 941px) {
+  #app {
+    padding: 0;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  math-field {
+    font-size: 2rem;
+  }
+
+  .selector-container {
+    padding: 0;
+  }
+
+  .selector {
+    margin: 1em 0.2em;
+  }
+
+  .selector input[type=button] {
+    font-size: 0.8em;
+  }
+
+  .selector span {
+    font-size: 0.8em;
+  }
+
+  .undo-btn {
+    font-size: 0.8em;
+  }
+}
+
