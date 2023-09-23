@@ -3,10 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/icon.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Row Reduce MAT-350</title>
   </head>
   <body>
+    <header>
+      <nav>
+        <button id="export-md" class="nav-item">Export as Markdown</button>
+        <button id="export-pdf" class="nav-item">Export as PDF</button>
+        <a id="github" class="nav-item" href="https://github.com/jonathanforhan/Row-Reducer-MAT-350" target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </nav>
+    </header>
     <div id="app">
       <h1>Row Reducer MAT-350</h1>
       <div class="selector-container">
@@ -32,7 +42,7 @@
       <div>
         <math-field read-only id="matrix"></math-field>
       </div>
-      <div>
+      <div style="margin-bottom: 8rem">
         <div class="tabs" style="justify-content: center">
           <!-- Addition tab -->
           <input type="radio" class="tabs__radio" name="operation-tabs" id="tab-add" checked>
@@ -56,6 +66,7 @@
         <button id="evaluate">Evaluate</button>
       </div>
     </div>
+    <div id="display" style="display: grid; text-align: center; margin: 2rem 0"></div>
     <script type="module" src="/src/main.ts"></script>
     <script defer src="//unpkg.com/mathlive"></script>
   </body>

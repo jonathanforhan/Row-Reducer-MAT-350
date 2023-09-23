@@ -14,9 +14,12 @@
   -webkit-text-size-adjust: 100%;
 }
 
+html {
+  overflow-y: scroll;
+}
+
 body {
   margin: 0;
-  display: flex;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -26,6 +29,14 @@ h1 {
   line-height: 1.1;
 }
 
+header {
+  padding: 1rem;
+}
+
+nav {
+  float: right;
+}
+
 math-field {
   --selection-background-color: #7799ff;
   --selection-background-color-focused: #7799ff;
@@ -33,6 +44,12 @@ math-field {
   --contains-highlight-background-color: #00000000;
   font-size: 3rem;
   border: none;
+  background: transparent;
+}
+
+.nav-item {
+  font-size: 1rem;
+  margin: 0 0.5rem;
 }
 
 .selector-container {
@@ -123,9 +140,9 @@ math-field {
 }
 
 #app {
-  max-width: 1280px;
+  width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 0;
   text-align: center;
 }
 
@@ -179,3 +196,19 @@ math-field {
   }
 }
 
+@media print {
+  header {
+    visibility: collapse;
+    display: none;
+  }
+
+  #app {
+    visibility: collapse;
+    display: none;
+  }
+
+  #display {
+    visibility: visible;
+    display: block;
+  }
+}

@@ -3,7 +3,7 @@ import {ComputeEngine} from "@cortex-js/compute-engine";
 
 declare var mathVirtualKeyboard: any;
 
-export class Mathfield {
+export default class Mathfield {
   protected _mfe: MathfieldElement;
   protected _ce: ComputeEngine;
 
@@ -21,5 +21,15 @@ export class Mathfield {
 
   protected _placeholder(prompt: string, value?: string): string {
     return `{\\placeholder[${prompt}]{${value || ""}}}`;
+  }
+
+  public cloneNode(): MathfieldElement {
+    const clone = this._mfe.cloneNode(true) as MathfieldElement;
+    clone.setValue(this._mfe.getValue().replace(/\{\\placeholder\[.*?]\{(.*?)}}/g, `$1`));
+    clone.style.setProperty("font-size", "1.5rem");
+    const container = document.createElement("div").appendChild(clone);
+    container.style.setProperty("display", "flex");
+    container.style.setProperty("justify-content", "center");
+    return container;
   }
 }

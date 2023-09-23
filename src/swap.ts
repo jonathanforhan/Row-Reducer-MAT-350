@@ -1,8 +1,8 @@
-import {Inputfield} from "./inputfield.ts";
+import Inputfield from "./inputfield.ts";
 
-export type SwapOperation = { R_left: number, R_right: number };
+type SwapOperation = { R_left: number, R_right: number };
 
-export class Swap extends Inputfield {
+export default class Swap extends Inputfield {
   private readonly _lhs = this._placeholder("lhs");
   private readonly _rhs = this._placeholder("rhs");
 
@@ -18,6 +18,9 @@ export class Swap extends Inputfield {
         R_right > data.length - 1 || R_right < 0) {
       return null;
     }
+
+    for (let i = 0; i < data[R_left].length; i++) if (data[R_left][i] === "") return null;
+    for (let i = 0; i < data[R_right].length; i++) if (data[R_right][i] === "") return null;
 
     [data[R_left], data[R_right]] = [data[R_right], data[R_left]];
     return data;

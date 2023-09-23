@@ -1,8 +1,8 @@
-import {Inputfield} from "./inputfield.ts";
+import Inputfield from "./inputfield.ts";
 
-export type AddOperation = { R_left: number, S_left: string | null, R_right: number, S_right: string | null };
+type AddOperation = { R_left: number, S_left: string | null, R_right: number, S_right: string | null };
 
-export class Add extends Inputfield {
+export default class Add extends Inputfield {
   private readonly _lhs_0 = this._placeholder("lhs_0");
   private readonly _rhs_0 = this._placeholder("rhs_0");
   private readonly _rhs_1 = this._placeholder("rhs_1");

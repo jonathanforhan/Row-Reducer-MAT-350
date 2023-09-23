@@ -1,4 +1,4 @@
-import {Mathfield} from "./mathfield.ts";
+import Mathfield from "./mathfield.ts";
 
 let [
   rowNumber,
@@ -11,8 +11,9 @@ let [
   document.querySelector("#row-text")!,
   document.querySelector("#column-text")!,
 ];
+const display = document.querySelector("#display")!;
 
-export class Matrix extends Mathfield {
+export default class Matrix extends Mathfield {
   private readonly _begin: string;
   private readonly _end: string;
   private _data: string[][];
@@ -20,8 +21,8 @@ export class Matrix extends Mathfield {
 
   public constructor() {
     super("#matrix");
-    this._begin = "\\left[\\begin{array}";
-    this._end = "\\end{array}\\right]";
+    this._begin = "\\begin{align*}\\left[\\begin{array}";
+    this._end = "\\end{array}\\right]\\end{align*}";
     this._data = [[this._placeholder(""+ 0 + 0)]];
 
     rowNumber.innerHTML = "1";
@@ -40,20 +41,32 @@ export class Matrix extends Mathfield {
       const undoAction = this._undoTree.pop();
       if (undoAction) {
         const undoData = JSON.parse(undoAction);
-        this.resize(undoData);
+
+        let undoSize = undoData.length * undoData[0].length;
+        let dataSize = this._data.length * this._data[0].length;
+
+        if (undoSize !== dataSize) {
+          this.resize(undoData);
+        } else {
+          if (display.lastChild) display.removeChild(display.lastChild);
+          if (display.lastChild) display.removeChild(display.lastChild);
+          if (display.childNodes.length === 1) {
+            display.removeChild(display.lastChild!);
+          }
+        }
         this.setData(undoData);
       }
     })
   }
 
-  public subtractRow(addUndo: boolean = true) {
+
+public subtractRow(addUndo: boolean = true) {
     if (this._data.length > 1) {
       if (addUndo) {
         this.addUndoAction();
       }
       this._data.pop();
       this._mfe.setValue(this.toLatex());
-      console.log(rowNumber.innerHTML);
       rowNumber.innerHTML = (+rowNumber.innerHTML - 1).toString();
       rowText.innerHTML = +rowNumber.innerHTML === 1 ? "Row" : "Rows";
     }

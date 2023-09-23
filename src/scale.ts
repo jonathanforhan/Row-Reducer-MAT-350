@@ -1,8 +1,8 @@
-import {Inputfield} from "./inputfield.ts";
+import Inputfield from "./inputfield.ts";
 
-export type ScaleOperation = { R_left: number, S_right: string | null };
+type ScaleOperation = { R_left: number, S_right: string | null };
 
-export class Scale extends Inputfield {
+export default class Scale extends Inputfield {
   private readonly _lhs = this._placeholder("lhs");
   private readonly _rhs = this._placeholder("rhs");
   private readonly _scalar = this._placeholder("scalar");
@@ -32,6 +32,8 @@ export class Scale extends Inputfield {
     }
 
     for (let i = 0; i < data[R_left].length; i++) {
+      if (data[R_left][i] === "") return null;
+
       const expr = this._ce.parse(`${data[R_left][i]} * ${S_right}`).evaluate().simplify();
       if (!expr.isValid) {
         return null;
