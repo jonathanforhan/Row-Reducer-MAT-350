@@ -4,24 +4,23 @@ import {Add} from "./add.ts";
 import {Scale} from "./scale.ts";
 import {Swap} from "./swap.ts";
 
+function defaultMatrix(matrix: Matrix) {
+  matrix.addRow(false);
+  matrix.addRow(false);
+  matrix.addColumn(false);
+  matrix.addColumn(false);
+  matrix.addColumn(false);
+}
+
 (function main() {
   const matrix = new Matrix();
   const [add ,scale, swap] = [new Add(), new Scale(), new Swap()];
-  let undoTree: string[] = [];
 
-  window.addEventListener("load", () => {
-    matrix.addRow();
-    matrix.addRow();
-    matrix.addColumn();
-    matrix.addColumn();
-    matrix.addColumn();
-  })
+  window.addEventListener("load", () => defaultMatrix(matrix));
 
-  document.querySelector("#undo-btn")!.addEventListener("click", () => {
-    const undoAction = undoTree.pop();
-    if (undoAction) {
-      matrix.setData(JSON.parse(undoAction));
-    }
+  document.querySelector("#reset-btn")!.addEventListener("click", () => {
+    matrix.clear();
+    defaultMatrix(matrix);
   })
 
   document.querySelector("#evaluate")!.addEventListener("click", () => {
@@ -35,10 +34,7 @@ import {Swap} from "./swap.ts";
     }
     if (expr === null) return alert("Invalid Data");
 
-    undoTree.push(JSON.stringify(matrix.getData()));
-    if (undoTree.length > 256) {
-      undoTree.shift();
-    }
+    matrix.addUndoAction();
     matrix.setData(expr);
   });
 })();

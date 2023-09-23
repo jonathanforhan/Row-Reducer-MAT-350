@@ -32,6 +32,7 @@ math-field {
   --selection-color: rgba(255, 255, 255, 0.87);
   --contains-highlight-background-color: #00000000;
   font-size: 3rem;
+  border: none;
 }
 
 .selector-container {
@@ -44,7 +45,7 @@ math-field {
   border-radius: 32px;
   width: fit-content;
   overflow: auto;
-  margin: 2em;
+  margin: 2em 1em;
   border: 1px solid
 }
 
@@ -70,7 +71,7 @@ math-field {
   height: 2.5rem;
 }
 
-.undo-btn {
+.util-btn {
   border: none;
   font-size: 1rem;
   text-align: center;
