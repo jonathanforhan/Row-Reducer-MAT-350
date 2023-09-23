@@ -1,8 +1,4 @@
 import { Mathfield } from "./mathfield.ts";
-//Import the operation classes for use with autoEvaluation
-import { Add } from "./add.ts";
-import { Swap } from "./swap.ts";
-import { Scale } from "./scale.ts";
 
 const [
   rowNumber,
@@ -33,29 +29,6 @@ export class Matrix extends Mathfield {
     document.querySelector("#row-add")!.addEventListener("click", () => this.addRow());
     document.querySelector("#column-sub")!.addEventListener("click", () => this.subtractColumn());
     document.querySelector("#column-add")!.addEventListener("click", () => this.addColumn());
-  }
-
-  autoEvaluation() {
-    /*
-    Function Name: autoEvaluation
-    Name Meaning: Automatic Evaluation
-    
-    Description:
-
-    - Checks pivot locations and performs
-    row operation based on pivot locations.
-
-    - Only able to do automatic evaluation
-    if there's nothing inputted in the operation
-    text boxes.
-
-    - Uses same "Evaluate" button to activate this function.
-
-    - Outputs what operation was performed.
-
-    - Undo button functionality should still operate
-    so that end-user can go back and forth and inspect the work.
-    */
   }
 
   subtractRow() {
