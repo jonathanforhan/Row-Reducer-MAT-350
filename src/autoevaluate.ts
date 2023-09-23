@@ -3,15 +3,14 @@ import { Swap } from "./swap.ts";
 import { Scale } from "./scale.ts";
 import { Matrix } from "./matrix.ts";
 
-export type AutoEvaluation = { data: Matrix["_data"] };
+export type AutoEvaluation = { data: Matrix["getData"] };
 
 export class AutoEval extends Matrix {
     constructor() {
         super();
-        
     }
 
-    autoEvaluation(matrix: AutoEval) {
+    evaluate(matrix: AutoEvaluation["data"]) {
     /*
     Function Name: autoEvaluation
     Parameters: 2D Array called "matrix"
@@ -22,12 +21,11 @@ export class AutoEval extends Matrix {
     - Checks pivot locations and performs
     row operation based on pivot locations.
     
-    - Needs a new operation tab on the web GUI
-    
     - Outputs what operation was performed.
     
-    - Undo button functionality should still operate
-    so that end-user can go back and forth and inspect the work.
+    --------------- DONE ---------------------
+    - Needs a new operation tab on the web GUI
+
     */
     }
 }
