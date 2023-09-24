@@ -11,6 +11,10 @@ const display = document.querySelector<HTMLDivElement>("#display")!;
 const showSteps = document.querySelector<HTMLInputElement>("#show-steps")!;
 
 function saveAsMarkdown(content: string) {
+  if (!display.hasChildNodes()) {
+    return alert("Nothing to export");
+  }
+
   const initiallyChecked = showSteps.checked;
   if (!initiallyChecked) {
     display.style.setProperty("display", "initial")
@@ -30,6 +34,10 @@ function saveAsMarkdown(content: string) {
 }
 
 function saveAsPdf() {
+  if (!display.hasChildNodes()) {
+    return alert("Nothing to export");
+  }
+
   const initiallyChecked = showSteps.checked;
   if (!initiallyChecked) {
     display.style.setProperty("display", "initial")
