@@ -30,6 +30,7 @@ export default class Mathfield {
     const container = document.createElement("div").appendChild(clone);
     container.style.setProperty("display", "flex");
     container.style.setProperty("justify-content", "center");
+    container.style.setProperty("margin-bottom", "1em");
     return container;
   }
 }

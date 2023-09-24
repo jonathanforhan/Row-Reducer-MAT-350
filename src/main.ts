@@ -5,7 +5,17 @@ import Scale from "./scale.ts";
 import Swap from "./swap.ts";
 import {MathfieldElement} from "mathlive";
 
+const matrix = new Matrix();
+const [add ,scale, swap] = [new Add(), new Scale(), new Swap()];
+const display = document.querySelector<HTMLDivElement>("#display")!;
+const showSteps = document.querySelector<HTMLInputElement>("#show-steps")!;
+
 function saveAsMarkdown(content: string) {
+  const initiallyChecked = showSteps.checked;
+  if (!initiallyChecked) {
+    display.style.setProperty("display", "initial")
+  }
+
   const link = document.createElement("a");
   const file = new Blob([content], { type: 'text/markdown' });
   link.href = URL.createObjectURL(file);
@@ -13,10 +23,21 @@ function saveAsMarkdown(content: string) {
   link.download = "matrix_" + date.getTime().toString() + ".md";
   link.click();
   URL.revokeObjectURL(link.href);
+
+  if (!initiallyChecked) {
+    display.style.setProperty("display", "none")
+  }
 }
 
 function saveAsPdf() {
+  const initiallyChecked = showSteps.checked;
+  if (!initiallyChecked) {
+    display.style.setProperty("display", "initial")
+  }
   window.print();
+  if (!initiallyChecked) {
+    display.style.setProperty("display", "none")
+  }
 }
 
 function defaultMatrix(matrix: Matrix) {
@@ -28,12 +49,17 @@ function defaultMatrix(matrix: Matrix) {
 }
 
 (function main() {
-  const matrix = new Matrix();
-  const [add ,scale, swap] = [new Add(), new Scale(), new Swap()];
-  const display = document.querySelector("#display")!;
   if (display.firstChild) display.removeChild(display.firstChild);
 
   window.addEventListener("load", () => defaultMatrix(matrix));
+
+  showSteps.checked = false;
+  display.style.setProperty("display", "none");
+  showSteps.addEventListener("click", (e) => {
+    (e.target as typeof showSteps).checked
+      ? display.style.setProperty("display", "initial")
+      : display.style.setProperty("display", "none");
+  })
 
   document.querySelector("#reset-btn")!.addEventListener("click", () => {
     matrix.clear();
