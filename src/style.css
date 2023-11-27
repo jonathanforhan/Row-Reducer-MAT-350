@@ -162,6 +162,10 @@ math-field {
   }
 }
 
+math-field::part(menu-toggle) {
+  display: none;
+}
+
 @media (max-width: 941px) {
   #app {
     padding: 0;
