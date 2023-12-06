@@ -17,7 +17,9 @@ export default class Scale extends Inputfield {
       const new_rhs = this._mfe.getPromptValue("rhs");
       if (new_lhs !== new_rhs) {
         let newVal = new_lhs !== this._prev_R ? new_lhs : new_rhs;
+        // @ts-ignore
         this._mfe.setPromptValue("lhs", newVal, {});
+        // @ts-ignore
         this._mfe.setPromptValue("rhs", newVal, {});
         this._prev_R = newVal;
       }
