@@ -139,7 +139,6 @@ public subtractRow(addUndo: boolean = true) {
     this._data = data;
     for (let i = 0; i < this._data.length; i++) {
       for (let j = 0; j < this._data[i].length; j++) {
-        // @ts-ignore
         this._mfe.setPromptValue(""+ i + j, this._data[i][j], {});
       }
     }
