@@ -21,8 +21,8 @@ export default class Add extends Inputfield {
       const new_rhs0 = this._mfe.getPromptValue("rhs_0");
       if (new_lhs0 !== new_rhs0) {
         let newVal = new_lhs0 !== this._prev_R ? new_lhs0 : new_rhs0;
-        this._mfe.setPromptContent("lhs_0", newVal, {});
-        this._mfe.setPromptContent("rhs_0", newVal, {});
+        this._mfe.setPromptValue("lhs_0", newVal, {});
+        this._mfe.setPromptValue("rhs_0", newVal, {});
         this._prev_R = newVal;
       }
     })
