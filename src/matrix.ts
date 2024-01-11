@@ -21,8 +21,8 @@ export default class Matrix extends Mathfield {
 
   public constructor() {
     super("#matrix");
-    this._begin = "\\begin{align*}\\left[\\begin{array}";
-    this._end = "\\end{array}\\right]\\end{align*}";
+    this._begin = "\\left[\\begin{array}";
+    this._end = "\\end{array}\\right]";
     this._data = [[this._placeholder(""+ 0 + 0)]];
 
     rowNumber.innerHTML = "1";
