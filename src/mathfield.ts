@@ -1,5 +1,5 @@
-import {MathfieldElement} from "mathlive";
-import {ComputeEngine} from "@cortex-js/compute-engine";
+import { MathfieldElement } from "mathlive";
+import { ComputeEngine } from "@cortex-js/compute-engine";
 
 declare var mathVirtualKeyboard: any;
 
@@ -13,6 +13,15 @@ export default class Mathfield {
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       mathVirtualKeyboard.layouts = ["numeric"];
       mathVirtualKeyboard.visible = isMobile;
+    });
+
+    this._mfe.addEventListener("keydown", (event) => {
+      if (event.key === "Tab") {
+        event.preventDefault();
+        if (!event.shiftKey) {
+          this._mfe.executeCommand("moveToNextPlaceholder");
+        }
+      }
     });
 
     this._ce = new ComputeEngine();
